@@ -7,9 +7,8 @@ const { PORT = 3000 } = process.env;
 
 app.use(requestLogger);
 
-app.get('/', (req, res) => {
-  res.send('Hello world');
-});
+app.use('/users', users);
+app.use('/articles', articles);
 
 app.use(errorLogger);
 
