@@ -14,8 +14,9 @@ const getArticles = (req, res) => {
 
 const createArticle = (req, res) => {
   // eventually owner will be decrypted from authorization token
-  const { keyword, title, text, date, source, link, image, owner } = req.body;
-  Article.create({ keyword, title, text, date, source, link, image, owner })
+  const tempUser = '61735ee3c2e0deac85d28da4';
+  const { keyword, title, text, date, source, link, image } = req.body;
+  Article.create({ keyword, title, text, date, source, link, image, owner: tempUser })
     .then((article) => article.populate('owner'))
     .then((article) => {
       res.send({ data: article });

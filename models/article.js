@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const { Schema, model } = require('mongoose');
+// const { Schema } = mongoose;
 
 const articleSchema = new Schema({
   keyword: {
@@ -31,11 +31,11 @@ const articleSchema = new Schema({
     required: true,
   },
   owner: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'user',
     required: true,
     select: false,
   },
 });
 
-module.exports = mongoose.model('article', articleSchema);
+module.exports = model('article', articleSchema);
