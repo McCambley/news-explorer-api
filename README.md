@@ -2,7 +2,7 @@
 
 Backend for the News Explorer project, the final project of the curriculum at Practicum by Yandex
 
-_The url for this api will be posted here shortly once the server is deployed_
+https://mccambley-news.students.nomoreparties.site/
 
 ## Overview
 
@@ -18,3 +18,4 @@ _The url for this api will be posted here shortly once the server is deployed_
 ## Updates
 
 - ### This project is slated for updated and will be progressing through the month of December 2021
+- ### Documentation coming soon
