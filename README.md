@@ -1,6 +1,8 @@
-# News Explorer
+# News Explorer 📰
 
 Backend for the News Explorer project, the final project of the curriculum at Practicum by Yandex
+
+_The url for this api will be posted here shortly once the server is deployed_
 
 ## Overview
 
@@ -12,3 +14,7 @@ Backend for the News Explorer project, the final project of the curriculum at Pr
 - ### [Checklist](https://code.s3.yandex.net/web-developer/static/web-diploma-criteria-en/index.html#)
 - ### [Trello](https://trello.com/b/xUrDxii4/final-project)
 - ### [Figma](https://www.figma.com/file/z1bxDn7eBEDlsDhnZ9dtin/Your-Final-Project?node-id=0%3A1)
+
+## Updates
+
+- ### This project is slated for updated and will be progressing through the month of December 2021
