@@ -11,8 +11,19 @@ function validateUrl(string) {
   return string;
 }
 
-// TODO validate the auth token
-router.get('/', getArticles);
+const authValidation = Joi.object()
+  .keys({
+    authorization: Joi.string().required(),
+  })
+  .unknown(true);
+
+router.get(
+  '/',
+  celebrate({
+    headers: authValidation,
+  }),
+  getArticles
+);
 
 router.post(
   '/',
@@ -26,6 +37,7 @@ router.post(
       link: Joi.string().required().custom(validateUrl),
       image: Joi.string().required(),
     }),
+    headers: authValidation,
   }),
   createArticle
 );
@@ -35,47 +47,10 @@ router.delete(
   celebrate({
     params: Joi.object().keys({
       articleId: Joi.string().hex().length(24),
-      // owner: Joi.string().hex() will be needed at delete
     }),
+    headers: authValidation,
   }),
   deleteArticle
 );
 
 module.exports = router;
-
-// const articleSchema = new Schema({
-//     keyword: {
-//       type: String,
-//       required: true,
-//     },
-//     title: {
-//       type: String,
-//       required: true,
-//     },
-//     text: {
-//       type: String,
-//       required: true,
-//     },
-//     date: {
-//       type: String,
-//       required: true,
-//     },
-//     source: {
-//       type: String,
-//       required: true,
-//     },
-//     link: {
-//       type: String,
-//       required: true,
-//     },
-//     image: {
-//       type: String,
-//       required: true,
-//     },
-//     owner: {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: 'user',
-//       required: true,
-//       select: false,
-//     },
-//   });

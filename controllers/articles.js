@@ -1,40 +1,62 @@
 const Article = require('../models/article');
+const ErrorHandler = require('../helpers/error');
 
-const getArticles = (req, res) => {
-  //   res.send({ data: 'You did it!' });
-  // still need to filter by user
-  Article.find({})
+const getArticles = (req, res, next) => {
+  Article.find({ owner: req.user._id })
     .then((articles) => {
       res.send({ data: articles });
     })
-    .catch((error) => {
-      res.status(400).send({ message: error });
-    });
+    .catch(next);
 };
 
-const createArticle = (req, res) => {
-  // eventually owner will be decrypted from authorization token
-  const tempUser = '61735ee3c2e0deac85d28da4';
+const createArticle = (req, res, next) => {
   const { keyword, title, text, date, source, link, image } = req.body;
-  Article.create({ keyword, title, text, date, source, link, image, owner: tempUser })
+  Article.create({ keyword, title, text, date, source, link, image, owner: req.user._id })
     .then((article) => article.populate('owner'))
     .then((article) => {
       res.send({ data: article });
     })
     .catch((error) => {
-      res.status(400).send({ message: error });
+      if (error.name === 'ValidationError') {
+        return next(new ErrorHandler(400, 'Invalid inputs'));
+      }
+      return next(error);
     });
 };
 
-const deleteArticle = (req, res) => {
-  // delete card
-  Article.findByIdAndDelete(req.params.articleId)
+const deleteArticle = (req, res, next) => {
+  // find card
+  Article.findById(req.params.articleId)
     .orFail()
     .then((article) => {
-      res.send({ data: article });
+      if (!(article.owner.toString() === req.user._id)) {
+        throw new Error('No!');
+      }
+
+      // delete the article if the above passes
+      Article.findByIdAndDelete(req.params.articleId)
+        .orFail()
+        .then((deletedCard) => {
+          res.send({ data: deletedCard });
+        })
+        .catch((error) => {
+          if (error.name === 'CastError') {
+            return next(new ErrorHandler(400, 'Invalid articleId'));
+          }
+          if (error.name === 'DocumentNotFoundError') {
+            return next(new ErrorHandler(404, 'Article not found'));
+          }
+          return next(error);
+        });
     })
     .catch((error) => {
-      res.send({ message: error });
+      if (error.name === 'CastError') {
+        return next(new ErrorHandler(400, 'Invalid articleId'));
+      }
+      if (error.name === 'DocumentNotFoundError') {
+        return next(new ErrorHandler(404, 'Article not found'));
+      }
+      return next(error);
     });
 };
 

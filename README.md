@@ -1,4 +1,5 @@
 # News Explorer
+
 Backend for the News Explorer project, the final project of the curriculum at Practicum by Yandex
 
 ## Overview
@@ -11,4 +12,3 @@ Backend for the News Explorer project, the final project of the curriculum at Pr
 - ### [Checklist](https://code.s3.yandex.net/web-developer/static/web-diploma-criteria-en/index.html#)
 - ### [Trello](https://trello.com/b/xUrDxii4/final-project)
 - ### [Figma](https://www.figma.com/file/z1bxDn7eBEDlsDhnZ9dtin/Your-Final-Project?node-id=0%3A1)
-

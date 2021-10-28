@@ -1,13 +1,27 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const ErrorHandler = require('../helpers/error');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-const getUser = (req, res) => {
-  res.send({ data: 'You did it!' });
+const getUser = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        throw new ErrorHandler(404, 'User not found');
+      }
+      res.send({ data: user });
+    })
+    .catch((error) => {
+      if (error.name === 'CastError') {
+        return next(new ErrorHandler(400, 'Invalid userId'));
+      }
+      return next(error);
+    });
 };
-const createUser = (req, res) => {
+
+const createUser = (req, res, next) => {
   const { email, password, name } = req.body;
   bcrypt
     .hash(password, 10)
@@ -15,10 +29,18 @@ const createUser = (req, res) => {
     .then((user) => {
       res.status(201).send({ data: { name: user.name, email: user.email } });
     })
-    .catch((error) => res.status(400).send(error));
+    .catch((error) => {
+      if (error.name === 'ValidationError') {
+        return next(new ErrorHandler(400, 'Invalid inputs'));
+      }
+      if (error.code === 11000) {
+        return next(new ErrorHandler(409, 'Conflict'));
+      }
+      return next(error);
+    });
 };
 
-const login = (req, res) => {
+const login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
@@ -29,9 +51,7 @@ const login = (req, res) => {
       );
       res.send({ token });
     })
-    .catch((error) => {
-      res.status(401).send({ message: error.message });
-    });
+    .catch((error) => next(new ErrorHandler(401, error.message)));
 };
 
 module.exports = { getUser, createUser, login };

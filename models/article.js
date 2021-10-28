@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-// const { Schema } = mongoose;
 
 const articleSchema = new Schema({
   keyword: {
@@ -34,7 +33,6 @@ const articleSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'user',
     required: true,
-    select: false,
   },
 });
 
