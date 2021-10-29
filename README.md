@@ -1,10 +1,10 @@
 # News Explorer 📰
 
-Backend for the News Explorer project, the final project of the curriculum at Practicum by Yandex
-
-https://mccambley-news.students.nomoreparties.site/
+# [api.mccambley-news.students.nomoreparties.site/](api.mccambley-news.students.nomoreparties.site/)
 
 ## Overview
+
+- ### Backend for the News Explorer project, the final project of the curriculum at Practicum by Yandex
 
 - ### [Frontend](https://github.com/McCambley/news-explorer-frontend)
 
