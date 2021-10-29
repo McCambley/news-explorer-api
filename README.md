@@ -1,6 +1,6 @@
 # News Explorer 📰
 
-# [api.mccambley-news.students.nomoreparties.site/](api.mccambley-news.students.nomoreparties.site/)
+# [api.mccambley-news.students.nomoreparties.site/](http://api.mccambley-news.students.nomoreparties.site/)
 
 ## Overview
 
