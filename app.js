@@ -19,10 +19,10 @@ const signup = require('./routes/signup');
 // helpers
 const limiter = require('./helpers/limiter');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, MONGO_URL, NODE_ENV } = process.env;
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/newsexplorer', {});
+mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : 'mongodb://localhost:27017/newsexplorer');
 
 app.use(cors());
 app.options('*', cors());

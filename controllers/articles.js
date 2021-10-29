@@ -30,7 +30,7 @@ const deleteArticle = (req, res, next) => {
     .orFail()
     .then((article) => {
       if (!(article.owner.toString() === req.user._id)) {
-        throw new Error('No!');
+        return next(new ErrorHandler(403, 'Action forbidden'));
       }
 
       // delete the article if the above passes
