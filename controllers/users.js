@@ -11,7 +11,8 @@ const getUser = (req, res, next) => {
       if (!user) {
         throw new ErrorHandler(404, 'User not found');
       }
-      res.send({ data: user });
+      // TODO Send Id?
+      res.send({ data: { name: user.name, email: user.email } });
     })
     .catch((error) => {
       if (error.name === 'CastError') {
@@ -46,6 +47,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
+        // here we create a 7 day session
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' }
       );

@@ -16,7 +16,7 @@ const mainRoute = require('./routes/index');
 // helpers
 const limiter = require('./helpers/limiter');
 
-const { PORT = 3000, MONGO_URL, NODE_ENV } = process.env;
+const { PORT = 5000, MONGO_URL, NODE_ENV } = process.env;
 const app = express();
 
 mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : 'mongodb://localhost:27017/newsexplorer');

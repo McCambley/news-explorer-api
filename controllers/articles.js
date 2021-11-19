@@ -3,6 +3,7 @@ const ErrorHandler = require('../helpers/error');
 
 const getArticles = (req, res, next) => {
   Article.find({ owner: req.user._id })
+    .sort('-date')
     .then((articles) => {
       res.send({ data: articles });
     })
